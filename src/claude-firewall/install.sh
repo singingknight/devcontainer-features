@@ -84,11 +84,11 @@ setup_firewall_script() {
     cp "$(dirname "$0")/init-firewall.sh" "$script_path"
     chmod +x "$script_path"
 
-    # If additional domains are specified, append them to the script
+    # If additional domains are specified, set them in the script
     if [ -n "$ALLOWED_DOMAINS" ]; then
         echo "Configuring additional allowed domains: $ALLOWED_DOMAINS"
-        # Export the variable so init-firewall.sh can access it
-        echo "export ADDITIONAL_ALLOWED_DOMAINS=\"$ALLOWED_DOMAINS\"" >> /etc/environment
+        # Replace the default empty value in the script with the configured domains
+        sed -i "s|^ADDITIONAL_ALLOWED_DOMAINS=\"\${ADDITIONAL_ALLOWED_DOMAINS:-}\"|ADDITIONAL_ALLOWED_DOMAINS=\"$ALLOWED_DOMAINS\"|" "$script_path"
     fi
 
     echo "Firewall script installed at $script_path"

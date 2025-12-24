@@ -1,6 +1,6 @@
 {
     "id": "claude-firewall",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Claude Firewall",
     "description": "A network firewall for devcontainers that restricts outbound traffic to only essential services (GitHub, npm registry, etc.)",
     "documentationURL": "https://github.com/singingknight/devcontainer-features/tree/main/src/claude-firewall",
