@@ -1,0 +1,22 @@
+{
+    "id": "claude-firewall",
+    "version": "1.0.0",
+    "name": "Claude Firewall",
+    "description": "A network firewall for devcontainers that restricts outbound traffic to only essential services (GitHub, npm registry, etc.)",
+    "documentationURL": "https://github.com/singingknight/devcontainer-features/tree/main/src/claude-firewall",
+    "licenseURL": "https://github.com/singingknight/devcontainer-features/blob/main/LICENSE",
+    "options": {
+        "allowedDomains": {
+            "type": "string",
+            "description": "Comma-separated list of additional domains to allow through the firewall (e.g., 'example.com,api.example.com')",
+            "default": ""
+        }
+    },
+    "capAdd": [
+        "NET_ADMIN",
+        "NET_RAW"
+    ],
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
