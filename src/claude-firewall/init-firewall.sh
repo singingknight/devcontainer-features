@@ -2,9 +2,6 @@
 set -euo pipefail  # Exit on error, undefined vars, and pipeline failures
 IFS=$'\n\t'       # Stricter word splitting
 
-# Load additional allowed domains from environment
-ADDITIONAL_ALLOWED_DOMAINS="${ADDITIONAL_ALLOWED_DOMAINS:-}"
-
 # Flush existing rules and delete existing ipsets
 iptables -F
 iptables -X
@@ -76,36 +73,6 @@ for domain in \
         ipset add allowed-domains "$ip"
     done < <(echo "$ips")
 done
-
-# Add additional domains if specified
-if [ -n "$ADDITIONAL_ALLOWED_DOMAINS" ]; then
-    echo "Processing additional allowed domains..."
-    IFS=',' read -ra DOMAINS <<< "$ADDITIONAL_ALLOWED_DOMAINS"
-    for domain in "${DOMAINS[@]}"; do
-        # Trim whitespace
-        domain=$(echo "$domain" | xargs)
-
-        if [ -z "$domain" ]; then
-            continue
-        fi
-
-        echo "Resolving additional domain: $domain..."
-        ips=$(dig +short A "$domain")
-        if [ -z "$ips" ]; then
-            echo "WARNING: Failed to resolve $domain, skipping..."
-            continue
-        fi
-
-        while read -r ip; do
-            if [[ ! "$ip" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-                echo "WARNING: Invalid IP from DNS for $domain: $ip, skipping..."
-                continue
-            fi
-            echo "Adding $ip for $domain"
-            ipset add allowed-domains "$ip"
-        done < <(echo "$ips")
-    done
-fi
 
 # Get host IP from default route
 HOST_IP=$(ip route | grep default | cut -d" " -f3)

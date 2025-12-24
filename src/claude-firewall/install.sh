@@ -1,9 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-# Feature options
-ALLOWED_DOMAINS="${ALLOWEDDOMAINS:-}"
-
 echo "Installing Devcontainer Network Firewall..."
 
 # Function to detect package manager
@@ -83,13 +80,6 @@ setup_firewall_script() {
     mkdir -p /usr/local/bin
     cp "$(dirname "$0")/init-firewall.sh" "$script_path"
     chmod +x "$script_path"
-
-    # If additional domains are specified, set them in the script
-    if [ -n "$ALLOWED_DOMAINS" ]; then
-        echo "Configuring additional allowed domains: $ALLOWED_DOMAINS"
-        # Replace the default empty value in the script with the configured domains
-        sed -i "s|^ADDITIONAL_ALLOWED_DOMAINS=\"\${ADDITIONAL_ALLOWED_DOMAINS:-}\"|ADDITIONAL_ALLOWED_DOMAINS=\"$ALLOWED_DOMAINS\"|" "$script_path"
-    fi
 
     echo "Firewall script installed at $script_path"
 }

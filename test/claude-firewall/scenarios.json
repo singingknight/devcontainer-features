@@ -5,14 +5,5 @@
             "claude-firewall": {}
         },
         "postCreateCommand": "sudo /usr/local/bin/init-firewall.sh"
-    },
-    "with-additional-domains": {
-        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-        "features": {
-            "claude-firewall": {
-                "allowedDomains": "google.com,cloudflare.com"
-            }
-        },
-        "postCreateCommand": "sudo /usr/local/bin/init-firewall.sh"
     }
 }

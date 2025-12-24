@@ -13,12 +13,6 @@ A network firewall for devcontainers that restricts outbound traffic to only ess
 }
 ```
 
-## Options
-
-| Options ID | Description | Type | Default Value |
-|-----|-----|-----|-----|
-| allowedDomains | Comma-separated list of additional domains to allow through the firewall (e.g., 'example.com,api.example.com') | string | "" |
-
 ## How It Works
 
 This feature installs a firewall script that uses iptables and ipset to restrict outbound network traffic. By default, the firewall allows connections to:
@@ -32,19 +26,6 @@ This feature installs a firewall script that uses iptables and ipset to restrict
 - Host network (for Docker host communication)
 
 All other outbound connections are blocked.
-
-## Usage with Additional Allowed Domains
-
-```json
-{
-  "features": {
-    "ghcr.io/singingknight/devcontainer-features/claude-firewall:1": {
-      "allowedDomains": "example.com,api.example.com,cdn.example.com"
-    }
-  },
-  "postCreateCommand": "sudo /usr/local/bin/init-firewall.sh"
-}
-```
 
 ## Requirements
 

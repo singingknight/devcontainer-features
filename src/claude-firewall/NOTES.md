@@ -40,21 +40,6 @@ Add the feature to your `devcontainer.json`:
 
 The feature automatically adds the required capabilities (`NET_ADMIN` and `NET_RAW`) to the container.
 
-## Adding Additional Allowed Domains
-
-If you need to allow additional domains through the firewall, you can specify them using the `allowedDomains` option:
-
-```json
-{
-  "features": {
-    "ghcr.io/singingknight/devcontainer-features/claude-firewall:1": {
-      "allowedDomains": "example.com,api.example.com"
-    }
-  },
-  "postCreateCommand": "sudo /usr/local/bin/init-firewall.sh"
-}
-```
-
 ## Requirements
 
 This feature requires the container to have the following capabilities:
