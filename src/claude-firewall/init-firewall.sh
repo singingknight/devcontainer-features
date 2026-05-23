@@ -92,7 +92,8 @@ done
 # Get host IP from default route
 HOST_IP=$(ip route | grep default | cut -d" " -f3)
 if [ -z "$HOST_IP" ]; then
-
+    echo "ERROR: Failed to detect host IP"
+    exit 1
 fi
 
 HOST_NETWORK=$(echo "$HOST_IP" | sed "s/\.[0-9]*$/.0\/24/")
